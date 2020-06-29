@@ -51,7 +51,7 @@ const makeMap = (speed,scale,data) =>{
     svg.call(zoom);      
 
     d3.queue()
-    .defer(d3.json, "../ne_110m_ocean.json")
+    .defer(d3.json, "./ne_110m_ocean.json")
     .await(ready)
 
     const projection = d3.geoMercator()
