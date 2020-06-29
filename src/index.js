@@ -76,7 +76,7 @@ const makeMap = (speed,scale,data) =>{
           .attr("fill","#070C58")
 
 
-      d3.csv('../test.csv', function(data){
+      d3.csv('./test.csv', function(data){
           data.forEach(d => {
           d.depth = +d.hdop;
           d.timestamp1 = new Date(d.timestamp);
