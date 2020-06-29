@@ -1,6 +1,5 @@
 import "./styles/index.scss";
 import {renderDepth} from "./scripts/depth"
-import {renderCords} from "./scripts/location"
 
 
 const width = 500;
@@ -52,7 +51,7 @@ const makeMap = (speed,scale,data) =>{
     svg.call(zoom);      
 
     d3.queue()
-    .defer(d3.json, "../ocean/ne_110m_ocean.json")
+    .defer(d3.json, "../ne_110m_ocean.json")
     .await(ready)
 
     const projection = d3.geoMercator()
