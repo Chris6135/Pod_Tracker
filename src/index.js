@@ -36,5 +36,6 @@ d3.select('#depth-graph')
 
 
 document.addEventListener("DOMContentLoaded", () => {
-makeGlobe()
+makeGlobe();
+
 })
