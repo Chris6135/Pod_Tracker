@@ -18,26 +18,37 @@
   </head>
 
   <body>
-
-    <!-- <button id="track">Watch Whales</button> -->
-
     
     <div class="parent">
-      <div class="button-menu">
-        <div class=start-buttons>
-          <button id="start"> Start</button>
-          <button id="reset"> Reset</button>
+
+      <div id="world-background"></div>
+
+      <div class="tracking-page" h="true">
+        <div class="button-menu">
+          <div class=start-buttons>
+            <button id="start"> Start</button>
+            <button id="reset"> Reset</button>
+          </div>
+
+          <div class="depth-parent"> 
+            <svg id="depth-graph" class = "depth-graph" ></svg>
+          </div>
+       </div>
+     </div>
+
+        <div class ="start-page">
+          <section class="start-header">
+            <h1>Pod Tracker</h1>
+            <p>Welocme to pod tracker, an app designed to viisualize the movments of whales across the ocean.</p>
+          </section>
+
+          <section class="start-footer">
+            <p>Click to get started!</p>
+            <button id="track">Watch Whales</button>
+          </section>
         </div>
-        <!-- <div class="speed-buttons">
-          <button id="speed-up"> Speed up</button>
-          <button id="speed-down"> Slow Down</button>  
-        </div> -->
-      </div>
 
       <svg id="world-map" class ="world-map"></svg>
-        <div class="depth-parent"> 
-          <svg id="depth-graph" class = "depth-graph"></svg>
-        </div>
     </div>
     <!-- <script src="../src/index.js"> </script> -->
     
