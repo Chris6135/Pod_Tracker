@@ -108,18 +108,23 @@ export function enableRotation() {
 
          })
 
-        //  d3.select("#reset").on("click", ()=>{
-        //     d3.selectAll(".line").remove()
-        //     console.log("reset")
-        //     console.log(speed)
-        // })
+         d3.select("#reset").on("click", ()=>{
+            d3.selectAll(".line").remove()
+        })
 
-        d3.select("#reset").on("click", ()=>{
-            transition.zoomOut(ocean,projection,path)
+        d3.select("#zoomOut").on("click", ()=>{
+            transition.reverseTransition(ocean,projection,path)
             a = d3.timer(function (elapsed) {
                 projection.rotate([config.speed * elapsed - 120, config.verticalTilt, config.horizontalTilt]);
                 svg.selectAll("path").attr("d", path);
+                d3.selectAll(".line").remove()
+
             });
+
+        })
+
+        d3.select("#viewDepth").on("click", ()=>{
+            transition.toggleDepth()
         })
     })
 })

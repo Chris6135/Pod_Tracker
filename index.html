@@ -21,25 +21,37 @@
     
     <div class="parent">
 
-      <div id="world-background"></div>
-
+      <!-- <div id="world-background"></div> -->
+      
       <div class="tracking-page" h="true">
-        <div class="button-menu">
-          <div class=start-buttons>
-            <button id="start"> Start</button>
-            <button id="reset"> Reset</button>
-          </div>
+        
+        <div class="tracking-upper"> 
 
-          <div class="depth-parent"> 
-            <svg id="depth-graph" class = "depth-graph" ></svg>
+          <div class="button-menu">
+            <div class=start-buttons>
+              <button id="start"> Start</button>
+              <button id="reset"> Reset</button>
+              <button id="zoomOut"> Zoom Out</button>
+              <button id="viewDepth"> Depth Graph</button>
+            </div>
+
+            
           </div>
-       </div>
+              <div class="depth-parent" h ="true">  
+                <svg id="depth-graph" class = "depth-graph" ></svg>
+              </div>
+        </div>
+
+        <div class="tracking-lower">
+          Put some words and stuff in here about stuff and things for things and stuff
+        </div>
      </div>
 
         <div class ="start-page">
           <section class="start-header">
             <h1>Pod Tracker</h1>
             <p>Welocme to pod tracker, an app designed to viisualize the movments of whales across the ocean.</p>
+            <p>This site allows you to track a whales migration over time. </p>
           </section>
 
           <section class="start-footer">
