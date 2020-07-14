@@ -10,6 +10,7 @@ export function toggleSplashUi() {
 }
 
 export function toggleTrackingUi() {
+    console.log("toggle")
     const trackUi = document.getElementsByClassName("tracking-page")[0]
 
     if (trackUi.getAttribute("h") === "true"){
@@ -139,11 +140,11 @@ export function zoomOut(ocean,projection,path) {
 export function executeTransition(ocean,projection,path){
     toggleSplashUi()
     zoom(ocean,projection,path)
-    toggleTrackingUi()
+    setTimeout( toggleTrackingUi, 4000)
 }
 
 export function reverseTransition(ocean,projection,path){
     toggleTrackingUi()
     zoomOut(ocean,projection,path)
-    toggleSplashUi()
+    setTimeout(toggleSplashUi, 1000)
 }

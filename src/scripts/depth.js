@@ -3,11 +3,9 @@
 export const renderDepth = (data,speed) =>{
     const svg = d3.select('#depth-graph')
     const xValue = d => d.timestamp1;
-    const xLabel = "Time";
     const yValue = d => d.depth;
-    const yLabel = "depth";
-    // const margin = { left: 120, right: 30, top: 20, bottom: 120 };
-    const margin = { left: 40, right: 0, top: 0, bottom: 0 };
+    const yLabel = "Depth-(Hdop)";
+    const margin = { left:60, right: 0, top: 10, bottom: 10 };
 
 
     const width = svg.attr('width')
@@ -17,15 +15,7 @@ export const renderDepth = (data,speed) =>{
 
     const g = svg.append('g')
           .attr('transform', `translate(${margin.left},${margin.top})`);
-      const xAxisG = g.append('g')
-          // .attr('transform', `translate(0, ${innerHeight})`);
-      const yAxisG = g.append('g');
-
-      xAxisG.append('text')
-          .attr('class', 'axis-label')
-          .attr('x', innerWidth / 2)
-          .attr('y', 100)
-          .text(xLabel);
+    const yAxisG = g.append('g');
 
       yAxisG.append('text')
           .attr('class', 'axis-label')
@@ -33,6 +23,7 @@ export const renderDepth = (data,speed) =>{
           .attr('y', -40)
           .attr('transform', `rotate(-90)`)
           .style('text-anchor', 'middle')
+          .style("fill", "black")
           .text(yLabel);
           
           const xScale = d3.scaleTime()
@@ -41,20 +32,11 @@ export const renderDepth = (data,speed) =>{
           
           const startDate = data[0].timestamp1;
           const finishDate = data[data.length - 1].timestamp1; 
-
-
-            const xAxis = d3.axisBottom()
-            .scale(xScale)
-            .tickPadding(20)
-            // .ticks(d3.utcMinute.every(60))
-            //   .tickValues(d3.timeMinutes(startDate, finishDate,5))
-            .tickSize(-innerHeight);
-          
           
           const yAxis = d3.axisLeft()
           .scale(yScale)
-          .ticks(5)
-          .tickPadding(15)
+          .ticks(10)
+          .tickPadding(10)
           .tickSize(-innerWidth)
           
           
@@ -98,14 +80,5 @@ export const renderDepth = (data,speed) =>{
       .ease(d3.easeLinear) 
       .attr("stroke-dashoffset", 0);
 
-
-    //  g.selectAll('circle').data(data)
-    //    .enter().append('circle')
-    //      .attr('cx', (d) =>  xScale(xValue(d)))
-    //      .attr('cy', d => yScale(yValue(d)))
-    //      .attr('fill-opacity', 0.6)
-    //      .attr('r', 8);
-
-     xAxisG.call(xAxis);
      yAxisG.call(yAxis);
       };
