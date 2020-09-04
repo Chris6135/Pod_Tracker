@@ -5,7 +5,7 @@ export const renderDepth = (data,speed) =>{
     const xValue = d => d.timestamp1;
     const yValue = d => d.depth;
     const yLabel = "Depth-(Hdop)";
-    const margin = { left:60, right: 0, top: 10, bottom: 10 };
+    const margin = { left:60, right: 10, top: 10, bottom: 10 };
 
 
     const width = svg.attr('width')
@@ -30,23 +30,12 @@ export const renderDepth = (data,speed) =>{
           
           const yScale = d3.scaleLinear();
           
-          const startDate = data[0].timestamp1;
-          const finishDate = data[data.length - 1].timestamp1; 
-          
           const yAxis = d3.axisLeft()
           .scale(yScale)
           .ticks(10)
           .tickPadding(10)
           .tickSize(-innerWidth)
           
-          
-          const nested = d3.nest()
-          .key( function(d){
-              return d.whaleId
-            })
-        .entries(data)
-        ;
-        console.log(nested)
         
         xScale
         .domain(d3.extent(data, xValue))

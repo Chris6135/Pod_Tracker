@@ -18,8 +18,9 @@
   </head>
 
   <body>
+    <div class =loader h = "false"> </div>
     
-    <div class="parent">
+    <div class="parent" h = "false">
 
       <!-- <div id="world-background"></div> -->
       
@@ -29,8 +30,8 @@
 
           <div class="button-menu">
             <div class=start-buttons>
-              <button id="start"> Start</button>
-              <button id="reset"> Reset</button>
+              <!-- <button id="start"> Start</button>
+              <button id="reset"> Reset</button> -->
               <button id="zoomOut"> Zoom Out</button>
               <button id="viewDepth"> Depth Graph</button>
             </div>
@@ -43,7 +44,16 @@
         </div>
 
         <div class="tracking-lower">
-          We are currently tracking a Sperm Whale swimming between Mexico and Baja California. 
+          We are currently tracking a Sperm Whale swimming between Mexico and Baja California.  
+          <br/>
+          Sperm whales are the largest of the toothed whales, and have been known to dive as deep as 3,280 feet
+          <br /> 
+
+          <div>   
+            <button id="start"> Start</button>
+            <button id="reset"> Reset</button>
+          </div>
+
         </div>
      </div>
 
@@ -51,7 +61,7 @@
           <section class="start-header">
             <h1>Pod Tracker</h1>
             <p>Welocme to pod tracker, an app designed to viisualize the movments of whales across the ocean.</p>
-            <p>This site allows you to track a whales migration over time. </p>
+            <p>Click below to see the migration path of a whale over time! </p>
           </section>
 
           <section class="start-footer">
@@ -59,8 +69,8 @@
             <button id="track">Watch Whales</button>
           </section>
         </div>
+          <svg id="world-map" class ="world-map"></svg>
 
-      <svg id="world-map" class ="world-map"></svg>
     </div>
     <!-- <script src="../src/index.js"> </script> -->
     

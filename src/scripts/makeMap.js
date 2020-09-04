@@ -3,11 +3,9 @@ import {renderDepth} from "./depth"
 
 
  const makeMap = (speed,scale,data) =>{
-    console.log("built")
 
     
     d3.select("#speed-down").on("click", ()=>{
-        console.log("down")
         speed = 10000000
         console.log(speed)
     
@@ -41,7 +39,6 @@ import {renderDepth} from "./depth"
     function ready (error,data){
       const ocean = topojson.feature(data, data.objects.ne_110m_ocean).features
 
-      console.log(ocean)
 
       svg.selectAll(".ocean")
           .data(ocean)
@@ -88,7 +85,6 @@ import {renderDepth} from "./depth"
 
       d3.select("#reset").on("click", ()=>{
           d3.selectAll(".line").remove()
-          console.log("reset")
           console.log(speed)
       })
         

@@ -41,8 +41,7 @@ export const renderCords = (data) =>{
           
           const startDate = data[0].timestamp1;
           const finishDate = data[data.length - 1].timestamp1; 
-          console.log(startDate)
-          console.log(finishDate)
+      
 
             const xAxis = d3.axisBottom()
             .scale(xScale)
@@ -64,7 +63,6 @@ export const renderCords = (data) =>{
             })
         .entries(data)
         ;
-        console.log(nested)
         
         xScale
         .domain(d3.extent(data, xValue))

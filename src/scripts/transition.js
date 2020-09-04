@@ -10,7 +10,6 @@ export function toggleSplashUi() {
 }
 
 export function toggleTrackingUi() {
-    console.log("toggle")
     const trackUi = document.getElementsByClassName("tracking-page")[0]
 
     if (trackUi.getAttribute("h") === "true"){
@@ -25,7 +24,6 @@ export function toggleTrackingUi() {
 
 
 export function toggleDepth() {
-    console.log("click")
     const depth = document.getElementsByClassName("depth-parent")[0]
 
     if (depth.getAttribute("h") === "true"){
@@ -103,7 +101,7 @@ export function zoom(ocean,projection,path) {
                 .ease(d3.easeExpIn)
                 .duration(duration)
                 .tween("zoom",function(){
-                    const scaleGradient = d3.interpolate(projection.scale(), 60000)
+                    const scaleGradient = d3.interpolate(projection.scale(), 40000) //prev 60000
                     return function(t) {
                         projection.scale(scaleGradient(t))
                         ocean.attr("d", path);
@@ -114,9 +112,7 @@ export function zoom(ocean,projection,path) {
           
 }
 
-
 export function zoomOut(ocean,projection,path) {
-    console.log("click")
   
         d3.transition()
         .duration(1000)

@@ -2,7 +2,6 @@ import * as transition from "./transition.js"
 import {renderDepth} from "./depth"
 
 const svg = d3.select('#world-map')
-console.log(+svg.style("width").slice(0,-2))
 
 let projection = d3.geoOrthographic()
 
@@ -17,12 +16,18 @@ const config = {
 }
 
 let ocean
+let parent
+let drawSpeed = 100000
 
 const g = svg.append("g")
+
+let pathToggle = true
 
 export function drawGlobe(speed = 100000) {  
     const width = +svg.style("width").slice(0,-2)
     const height = +svg.style("height").slice(0,-2)
+    parent = document.querySelector(".world-map");
+    parent.setAttribute("h", true)
     
     projection
         .translate([width /2, height /2])
@@ -34,7 +39,7 @@ export function drawGlobe(speed = 100000) {
     //     .translate([width /2, height /2])
 
     d3.queue()
-        .defer(d3.json, './ne_110m_ocean.json')          
+        .defer(d3.json, './ne_110m_ocean.json')
         .await((error, data, locationData) => {
            ocean = g.selectAll(".segment")
                 .data(topojson.feature(data, data.objects.ne_110m_ocean).features)
@@ -43,8 +48,7 @@ export function drawGlobe(speed = 100000) {
                 .attr("d", path)
                 .style("fill", () => '#070C58')
         });
-        console.log(projection)
-    }   
+}   
 
 
         
@@ -67,50 +71,66 @@ export function enableRotation() {
     })
 
     
-    d3.csv('./test.csv', function(data){
+    d3.csv('./raw_data.csv', function(data){
         data.forEach(d => {
         d.depth = +d.hdop;
         d.timestamp1 = new Date(d.timestamp);
         d.locationLong = +d.locationLong 
         d.locationLat = +d.locationLat
-        
+        d.whaleID = +d.whaleID
+
+        const whales = d3.nest()
+        .key(function(d) {return d.whaleId;})
+        .entries(data);
+
 
     d3.select("#start").on("click", ()=>{
-        console.log("click")
+        console.log(data)
+        console.log(whales[6].values)
 
+    if(pathToggle){
 
-    const linePath = svg.append("path")
-    .datum(data)
-    .attr("fill", "none")
-    .attr("stroke", "white")
-    .attr("class", "line")
-    .attr("stroke-width", 3)
-    .attr("d", d3.line()
-        .x(function(d) { return projection(
-            [d.locationLong, d.locationLat])[0]})
-        .y(function(d) { return projection(
-            [d.locationLong, d.locationLat])[1]})
-        .curve(d3.curveCardinal));
-
-    var totalLength = linePath.node().getTotalLength();
-
-    linePath
-    .attr("stroke-dasharray", totalLength + " " + totalLength)
-    .attr("stroke-dashoffset", totalLength)
-    .transition() 
-    .duration(12000) 
-    .ease(d3.easeLinear) 
-    .attr("stroke-dashoffset", 0);
-
-
-    renderDepth(data, 12000)
+        // whales.forEach(function(d,i){
+            // let lines = {}
 
 
 
+            
+            let lines = svg.append("path")
+            .datum(whales[6].values)
+            .attr("fill", "none")
+            .attr("stroke", "white")
+            .attr("class", "line")
+            .attr("stroke-width", 3)
+            .attr("d", d3.line()
+            .x(function(d) { return projection(
+                [d.locationLong, d.locationLat])[0]})
+                .y(function(d) { return projection(
+                    [d.locationLong, d.locationLat])[1]})
+                    .curve(d3.curveCardinal));
+                    
+                    
+        let totalLength = lines.node().getTotalLength();
+        
+   
+        lines
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition() 
+        .duration(drawSpeed)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
+
+
+        renderDepth(whales[6].values, drawSpeed)
+        pathToggle = false
+            // })
+            }
          })
 
          d3.select("#reset").on("click", ()=>{
             d3.selectAll(".line").remove()
+            pathToggle = true
         })
 
         d3.select("#zoomOut").on("click", ()=>{
@@ -128,6 +148,11 @@ export function enableRotation() {
             transition.toggleDepth()
         })
     })
+
+    let loader = document.querySelector(".loader") ;    
+    console.log(loader)
+    loader.setAttribute("h", true)
+    parent.setAttribute("h" ,false)
 })
 }
 
