@@ -78,56 +78,63 @@ export function enableRotation() {
         d.locationLong = +d.locationLong 
         d.locationLat = +d.locationLat
         d.whaleID = +d.whaleID
+        d.name = d.name
 
         const whales = d3.nest()
-        .key(function(d) {return d.whaleId;})
+        .key(function(d) {return d.name;})
         .entries(data);
 
 
     d3.select("#start").on("click", ()=>{
-        console.log(data)
-        console.log(whales[6].values)
+        console.log("Started")
+        console.log(pathToggle)
+
+      
 
     if(pathToggle){
 
-        // whales.forEach(function(d,i){
-            // let lines = {}
+        whales.forEach(function(d,i){
+           let lines = svg.append("path")
+           .datum(d.values)
+           .attr("id", d.key)
+           .attr("fill", "none")
+           .attr("stroke", "white")
+           .attr("class", "line")
+           .attr("opacity", "0.1")
+           .attr("stroke-width", 3)
+           .attr("d", d3.line()
+           .x(function(d) { return projection(
+               [d.locationLong, d.locationLat])[0]})
+               .y(function(d) { return projection(
+                   [d.locationLong, d.locationLat])[1]})
+                   .curve(d3.curveCardinal));
+                   
+                   
+       let totalLength = lines.node().getTotalLength();
+       
+  
+       lines
+       .attr("stroke-dasharray", totalLength + " " + totalLength)
+       .attr("stroke-dashoffset", totalLength)
+       .transition() 
+       .duration(drawSpeed)
+       .ease(d3.easeLinear)
+       .attr("stroke-dashoffset", 0);
+        })
 
-
-
-            
-            let lines = svg.append("path")
-            .datum(whales[6].values)
-            .attr("fill", "none")
-            .attr("stroke", "white")
-            .attr("class", "line")
-            .attr("stroke-width", 3)
-            .attr("d", d3.line()
-            .x(function(d) { return projection(
-                [d.locationLong, d.locationLat])[0]})
-                .y(function(d) { return projection(
-                    [d.locationLong, d.locationLat])[1]})
-                    .curve(d3.curveCardinal));
-                    
-                    
-        let totalLength = lines.node().getTotalLength();
+        let whale = document.querySelector("#Phil");
+        whale.setAttribute("opacity", "1")
         
-   
-        lines
-        .attr("stroke-dasharray", totalLength + " " + totalLength)
-        .attr("stroke-dashoffset", totalLength)
-        .transition() 
-        .duration(drawSpeed)
-        .ease(d3.easeLinear)
-        .attr("stroke-dashoffset", 0);
 
+      
 
         renderDepth(whales[6].values, drawSpeed)
         pathToggle = false
-            // })
             }
          })
 
+ 
+ 
          d3.select("#reset").on("click", ()=>{
             d3.selectAll(".line").remove()
             pathToggle = true
@@ -142,15 +149,44 @@ export function enableRotation() {
 
             });
 
+            pathToggle = true
         })
 
         d3.select("#viewDepth").on("click", ()=>{
             transition.toggleDepth()
         })
+
+        d3.select("#select-whale").on("click", ()=>{
+            console.log("selected")
+            let whaleList = document.querySelector(".whale-selector");
+            console.log(whaleList)
+
+            if (whaleList.getAttribute("h") === "true"){
+        
+                whaleList.setAttribute("h" ,false)
+            }
+            else{
+                
+                whaleList.setAttribute("h" ,true)
+            }
+         })
+
+        whales.forEach((d,i)=>{
+            d3.select("."+d.key).on("click", ()=>{
+                let whale
+                whales.forEach((d)=>{
+                    whale = document.querySelector("#" + d.key);
+                    whale.setAttribute("opacity", "0.1")
+                })
+                whale = document.querySelector("#" + d.key);
+                whale.setAttribute("opacity", "1")
+
+            })
+
+        })
     })
 
     let loader = document.querySelector(".loader") ;    
-    console.log(loader)
     loader.setAttribute("h", true)
     parent.setAttribute("h" ,false)
 })
