@@ -2,7 +2,7 @@
 
 export const renderDepth = (data,speed) =>{
     const svg = d3.select('#depth-graph')
-    const xValue = d => d.timestamp1;
+    const xValue = d => d.timestamp;
     const yValue = d => d.depth;
     const yLabel = "Depth-(Hdop)";
     const margin = { left:60, right: 10, top: 10, bottom: 10 };
@@ -38,28 +38,58 @@ export const renderDepth = (data,speed) =>{
           
         
         xScale
-        .domain(d3.extent(data, xValue))
+        .domain(d3.extent(data[0].values, xValue))
         .range([0, innerWidth])
         .nice();
         
         yScale
-        .domain(d3.extent(data, yValue))
+        .domain(d3.extent(data[0].values, yValue))
         .range([0, innerHeight])
         .nice();
 
-   const path = svg.append("path")
+  //  const path = svg.append("path")
+    // .attr('transform', `translate(${margin.left},${margin.top})`)
+  //   .datum(data)
+  //   .attr("fill", "none")
+  //   .attr("class", "line")
+  //   .attr("stroke", "blue")
+  //   .attr("stroke-width", 1.5)
+    // .attr("d", d3.line()
+    //   .x(function(d) { return xScale(xValue(d)) })
+    //   .y(function(d) { return yScale(yValue(d)) })
+    //   )
+
+      // var totalLength = path.node().getTotalLength();
+
+      // path
+      // .attr("stroke-dasharray", totalLength + " " + totalLength)
+      // .attr("stroke-dashoffset", totalLength)
+      // .transition() 
+      // .duration(speed) 
+      // .ease(d3.easeLinear) 
+      // .attr("stroke-dashoffset", 0);
+
+  data.forEach(function(data,i){
+
+    let path = svg.append("path")
     .attr('transform', `translate(${margin.left},${margin.top})`)
-    .datum(data)
+    .datum(data.values)
+    .attr("id", data.key + "-depth")
     .attr("fill", "none")
-    .attr("class", "line")
     .attr("stroke", "blue")
+    .attr("class", "line")
+    .attr("opacity", "0.5")
     .attr("stroke-width", 1.5)
     .attr("d", d3.line()
-      .x(function(d) { return xScale(xValue(d)) })
+      .x((d) => { debugger
+         return xScale(xValue(d)) })
       .y(function(d) { return yScale(yValue(d)) })
       )
-
+            
+            
       var totalLength = path.node().getTotalLength();
+
+
 
       path
       .attr("stroke-dasharray", totalLength + " " + totalLength)
@@ -68,6 +98,10 @@ export const renderDepth = (data,speed) =>{
       .duration(speed) 
       .ease(d3.easeLinear) 
       .attr("stroke-dashoffset", 0);
+ })
+
+ let whale = document.querySelector("#Phil");
+ whale.setAttribute("opacity", "1")
 
      yAxisG.call(yAxis);
       };

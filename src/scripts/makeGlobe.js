@@ -74,10 +74,9 @@ export function enableRotation() {
     d3.csv('./raw_data.csv', function(data){
         data.forEach(d => {
         d.depth = +d.hdop;
-        d.timestamp1 = new Date(d.timestamp);
+        d.timestamp = new Date(d.timestamp);
         d.locationLong = +d.locationLong 
         d.locationLat = +d.locationLat
-        d.whaleID = +d.whaleID
         d.name = d.name
 
         const whales = d3.nest()
@@ -128,7 +127,7 @@ export function enableRotation() {
 
       
 
-        renderDepth(whales[6].values, drawSpeed)
+        renderDepth(whales, drawSpeed)
         pathToggle = false
             }
          })
